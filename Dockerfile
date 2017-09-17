@@ -12,5 +12,5 @@ RUN mkdir -p /opt/expressapp
 COPY . /opt/expressapp/
 # install the library dependencies for this application
 RUN cd /opt/expressapp && npm install --production
-#ENTRYPOINT ["node"]
-#CMD ["/opt/exampleapp/index.js"]
+ENV DEBUG=kfd-nodejs:*
+CMD ["npm start"]
