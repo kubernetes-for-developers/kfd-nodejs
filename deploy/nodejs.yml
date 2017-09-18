@@ -1,0 +1,17 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nodejs
+  labels:
+    run: nodejs
+spec:
+  template:
+    metadata:
+      labels:
+         app: nodejs
+    spec:
+      containers:
+      - name: nodejs
+        image: quay.io/kubernetes-for-developers/nodejs:latest
+        ports:
+        - containerPort: 3000
