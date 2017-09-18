@@ -7,10 +7,13 @@ RUN apk upgrade
 # https://pkgs.alpinelinux.org/package/edge/main/x86/python3
 RUN apk add nodejs nodejs-npm
 # make a directory for our application
-RUN mkdir -p /opt/expressapp
+WORKDIR /src
 # move requirements file into the container
-COPY . /opt/expressapp/
+COPY package.json .
 # install the library dependencies for this application
-RUN cd /opt/expressapp && npm install --production
+RUN npm install --production
+# copy in the rest of our local source
+COPY . .
+# set the debug environment variable
 ENV DEBUG=kfd-nodejs:*
-CMD ["npm start"]
+CMD ["npm", "start"]
