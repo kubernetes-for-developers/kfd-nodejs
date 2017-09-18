@@ -10,6 +10,7 @@ RUN apk add nodejs nodejs-npm
 WORKDIR /src
 # move requirements file into the container
 COPY package.json .
+COPY package-lock.json .
 # install the library dependencies for this application
 RUN npm install --production
 # copy in the rest of our local source
