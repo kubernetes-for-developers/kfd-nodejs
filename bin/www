@@ -3,7 +3,26 @@
 /**
  * Module dependencies.
  */
+var fs = require('fs');
+var nconf = require('nconf');
 
+nconf.use('memory');
+nconf.argv().env().file({ file: '/etc/nodejs-config/feature.flags'});
+/**
+ * base configuration in the file /etc/nodejs-config/feature.flags
+ *  override any values in the file from environment variables
+ *  override any remaining values from arguments on commandline
+ *  defaults below if nothing else is set
+*/
+nconf.defaults({
+   "PORT": "3000",
+   "ENV": "development",
+   "debug": true,
+   "features": {
+     "flag1": 123,
+     "flag2": 456
+   }
+});
 var app = require('../app');
 var debug = require('debug')('kfd-nodejs:server');
 var http = require('http');
@@ -14,6 +33,14 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+
+/**
+ * report on key configuration
+ */
+
+debug('PORT for nodejs application set to %d', port);
+debug('ENV for nodejs application set to %s', nconf.get('ENV'));
+debug('features for nodejs application set to %j', nconf.get('features'));
 
 /**
  * Create HTTP server.

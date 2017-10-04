@@ -1,3 +1,35 @@
+---
+# EXPORT SERVICE INTERFACE
+kind: Service
+apiVersion: v1
+metadata:
+    name: nodejs-service
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+  selector:
+      app: nodejs
+---
+# CONFIGURATION FOR THE NODEJS APP
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nodejs-config
+data:
+  DEBUG: "kfd-nodejs:server,http,mail,express:*"
+  ENV: "production"
+  PORT: "3000"
+  feature.flags: |
+    {
+      "name": "kfd-nodejs",
+      "debug": true,
+      "features": {
+        "flag1": "abc",
+        "flag2": "def"
+      }
+    }
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -12,6 +44,18 @@ spec:
     spec:
       containers:
       - name: nodejs
-        image: quay.io/kubernetes-for-developers/nodejs:latest
+        image: quay.io/kubernetes-for-developers/nodejs:0.2.0
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: nodejs-config
+        volumeMounts:
+            - name: config
+              mountPath: /etc/nodejs-config
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: nodejs-config
