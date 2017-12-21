@@ -42,6 +42,7 @@ app.set('port', port);
 debug('PORT for nodejs application set to %d', port);
 debug('ENV for nodejs application set to %s', nconf.get('ENV'));
 debug('features for nodejs application set to %j', nconf.get('features'));
+debug('DB hostname is set to %s', nconf.get('db'))
 
 /**
  * Create HTTP server.
