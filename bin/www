@@ -21,7 +21,8 @@ nconf.defaults({
    "features": {
      "flag1": 123,
      "flag2": 456
-   }
+   },
+   "db": "localhost"
 });
 var app = require('../app');
 var debug = require('debug')('kfd-nodejs:server');

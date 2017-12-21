@@ -27,7 +27,8 @@ data:
       "features": {
         "flag1": "abc",
         "flag2": "def"
-      }
+      },
+      "db": "redis-service"
     }
 ---
 apiVersion: apps/v1beta1
