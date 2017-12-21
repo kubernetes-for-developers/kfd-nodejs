@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: nodejs
-        image: quay.io/kubernetes-for-developers/nodejs:0.2.0
+        image: quay.io/kubernetes-for-developers/nodejs:0.3.0
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
