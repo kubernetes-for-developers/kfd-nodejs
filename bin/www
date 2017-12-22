@@ -123,3 +123,12 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+/**
+ * SIGTERM handler to terminate (semi) gracefully
+ */
+
+ process.on(process.SIGTERM, function() {
+   console.log('Received SIGTERM signal, now shutting down...');
+   process.exit(0);
+ })
