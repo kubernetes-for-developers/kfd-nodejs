@@ -44,6 +44,12 @@ debug('ENV for nodejs application set to %s', nconf.get('ENV'));
 debug('features for nodejs application set to %j', nconf.get('features'));
 debug('DB hostname is set to %s', nconf.get('db'))
 
+/** 
+ * assign the configuration object into the app for general availability
+ */
+
+app.set('nconf', nconf)
+
 /**
  * Create HTTP server.
  */

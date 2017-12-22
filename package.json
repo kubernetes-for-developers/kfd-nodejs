@@ -13,6 +13,7 @@
     "morgan": "~1.8.1",
     "nconf": "^0.8.5",
     "pug": "~2.0.0-beta11",
+    "redis": "^2.8.0",
     "serve-favicon": "^2.4.5"
   },
   "devDependencies": {
