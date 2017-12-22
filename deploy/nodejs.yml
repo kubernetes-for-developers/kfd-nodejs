@@ -56,6 +56,18 @@ spec:
             - name: config
               mountPath: /etc/nodejs-config
               readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /probes/alive
+            port: 3000
+          initialDelaySeconds: 1
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /probes/ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
         - name: config
           configMap:
