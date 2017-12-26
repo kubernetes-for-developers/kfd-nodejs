@@ -21,7 +21,8 @@ nconf.defaults({
    "features": {
      "flag1": 123,
      "flag2": 456
-   }
+   },
+   "db": "localhost"
 });
 var app = require('../app');
 var debug = require('debug')('kfd-nodejs:server');
@@ -41,6 +42,13 @@ app.set('port', port);
 debug('PORT for nodejs application set to %d', port);
 debug('ENV for nodejs application set to %s', nconf.get('ENV'));
 debug('features for nodejs application set to %j', nconf.get('features'));
+debug('DB hostname is set to %s', nconf.get('db'))
+
+/** 
+ * assign the configuration object into the app for general availability
+ */
+
+app.set('nconf', nconf)
 
 /**
  * Create HTTP server.
@@ -115,3 +123,12 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+/**
+ * SIGTERM handler to terminate (semi) gracefully
+ */
+
+ process.on(process.SIGTERM, function() {
+   console.log('Received SIGTERM signal, now shutting down...');
+   process.exit(0);
+ })

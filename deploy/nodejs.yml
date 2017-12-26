@@ -27,7 +27,8 @@ data:
       "features": {
         "flag1": "abc",
         "flag2": "def"
-      }
+      },
+      "db": "redis-service"
     }
 ---
 apiVersion: apps/v1beta1
@@ -44,7 +45,7 @@ spec:
     spec:
       containers:
       - name: nodejs
-        image: quay.io/kubernetes-for-developers/nodejs:0.2.0
+        image: quay.io/kubernetes-for-developers/nodejs:0.3.0
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -55,6 +56,18 @@ spec:
             - name: config
               mountPath: /etc/nodejs-config
               readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /probes/alive
+            port: 3000
+          initialDelaySeconds: 1
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /probes/ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
       volumes:
         - name: config
           configMap:
