@@ -38,7 +38,7 @@ metadata:
   name: nodejs
 spec:
   serviceName: "nodejs"
-  replicas: 2
+  replicas: 5
   selector:
     matchLabels:
       app: nodejs
@@ -79,6 +79,8 @@ spec:
         - name: config
           configMap:
             name: nodejs-config
+  updateStrategy:
+    type: RollingUpdate
   volumeClaimTemplates:
   - metadata:
       name: datastore
