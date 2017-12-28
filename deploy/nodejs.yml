@@ -37,7 +37,7 @@ kind: StatefulSet
 metadata:
   name: nodejs
 spec:
-  serviceName: "nodejs"
+  serviceName: "nodejs-service"
   replicas: 5
   selector:
     matchLabels:
