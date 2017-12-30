@@ -5,9 +5,10 @@ apiVersion: v1
 metadata:
     name: nodejs-service
 spec:
-  type: NodePort
   ports:
   - port: 3000
+    name: web
+  clusterIP: None
   selector:
       app: nodejs
 ---
@@ -32,12 +33,15 @@ data:
     }
 ---
 apiVersion: apps/v1beta1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: nodejs
-  labels:
-    run: nodejs
 spec:
+  serviceName: "nodejs-service"
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nodejs
   template:
     metadata:
       labels:
@@ -49,6 +53,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
+          name: web
         envFrom:
         - configMapRef:
             name: nodejs-config
@@ -56,6 +61,8 @@ spec:
             - name: config
               mountPath: /etc/nodejs-config
               readOnly: true
+            - name: datastore
+              mountPath: /opt/data
         livenessProbe:
           httpGet:
             path: /probes/alive
@@ -72,3 +79,13 @@ spec:
         - name: config
           configMap:
             name: nodejs-config
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      name: datastore
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
