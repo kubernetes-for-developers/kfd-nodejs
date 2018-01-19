@@ -10,6 +10,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "^2.6.9",
     "express": "^4.16.2",
+    "express-prom-bundle": "^3.2.1",
     "morgan": "~1.8.1",
     "nconf": "^0.8.5",
     "pug": "~2.0.0-beta11",
