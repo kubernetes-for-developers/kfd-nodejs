@@ -3,7 +3,9 @@
 kind: Service
 apiVersion: v1
 metadata:
-    name: nodejs-service
+  name: nodejs-service
+  annotations:
+    prometheus.io/scrape: "true"
 spec:
   ports:
   - port: 3000
