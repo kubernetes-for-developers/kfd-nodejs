@@ -3,7 +3,9 @@
 kind: Service
 apiVersion: v1
 metadata:
-    name: nodejs-service
+  name: nodejs-service
+  annotations:
+    prometheus.io/scrape: "true"
 spec:
   ports:
   - port: 3000
@@ -49,7 +51,7 @@ spec:
     spec:
       containers:
       - name: nodejs
-        image: quay.io/kubernetes-for-developers/nodejs:0.3.0
+        image: quay.io/kubernetes-for-developers/nodejs:0.5.0
         imagePullPolicy: Always
         ports:
         - containerPort: 3000

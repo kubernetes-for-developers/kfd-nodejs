@@ -9,6 +9,9 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var probes = require('./routes/probes');
 
+const promBundle = require("express-prom-bundle");
+const metricsMiddleware = promBundle({includeMethod: true});
+
 var app = express();
 
 // view engine setup
@@ -23,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(metricsMiddleware)
 app.use('/', index);
 app.use('/probes', probes)
 app.use('/users', users);
