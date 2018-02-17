@@ -11,6 +11,7 @@
     "debug": "^2.6.9",
     "express": "^4.16.2",
     "express-prom-bundle": "^3.2.1",
+    "jaeger-client": "^3.8.0",
     "morgan": "~1.8.1",
     "nconf": "^0.8.5",
     "pug": "~2.0.0-beta11",
@@ -18,6 +19,6 @@
     "serve-favicon": "^2.4.5"
   },
   "devDependencies": {
-    "eslint": "^4.13.1"
+    "eslint": "^4.18"
   }
 }
