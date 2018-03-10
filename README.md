@@ -32,4 +32,13 @@ https://quay.io/repository/kubernetes-for-developers/nodejs?tab=tags
 
     docker push quay.io/kubernetes-for-developers/nodejs
 
-## see [e2e_tests](e2e_tests/README.md) for how to run end to end integration tests
+## testing
+
+To run the local unit testing:
+
+    npm test
+
+To run integration tests, the tests are in e2e_tests, and you can invoke
+them with:
+
+    npm run integration
