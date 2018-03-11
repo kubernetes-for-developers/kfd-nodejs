@@ -44,14 +44,14 @@ describe('kubernetes', function() {
 
     describe('should repeat until the pods are ready', function() {
       // Mocha supports a retry mechanism limited by number of retries...
-      this.retries(30);
+      this.retries(100);
       // an a default timeout of 20,000ms that we can increase
-      this.timeout(300000);
+      this.timeout(600000);
 
       it('check to see that all pods are reporting ready', function() {
         return new Promise(function(resolve, reject) {
           console.log(' - delay 5 seconds...')
-          setTimeout(() => resolve(1), 5000);            
+          setTimeout(() => resolve(1), 5000);
         }).then(function(result) {
           return  k8sApi.listNamespacedPod('default')
           .then((res) => {
@@ -78,7 +78,7 @@ describe('kubernetes', function() {
       })
 
     }) // interact with the deployed services
-    
+
   }); //describe - cluster
 
 }); // describe - kubernetes
