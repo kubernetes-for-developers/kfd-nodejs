@@ -40,9 +40,6 @@ metadata:
   name: nodejs
 spec:
   replicas: 2
-  selector:
-    matchLabels:
-      app: nodejs
   template:
     metadata:
       labels:

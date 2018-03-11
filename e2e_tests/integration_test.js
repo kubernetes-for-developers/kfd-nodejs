@@ -50,7 +50,7 @@ describe('kubernetes', function() {
 
       it('check to see that all pods are reporting ready', function() {
         return new Promise(function(resolve, reject) {
-          console.log('delay 5 seconds...')
+          console.log(' - delay 5 seconds...')
           setTimeout(() => resolve(1), 5000);            
         }).then(function(result) {
           return  k8sApi.listNamespacedPod('default')
@@ -63,24 +63,21 @@ describe('kubernetes', function() {
           })
         })
       }) // it
-
-      // it.skip('should access by pod...', function() {
-      //   return k8sApi.proxyGETNamespacedPodWithPath("nodejs-0", "default", "/")
-      //   .then(function(res) {
-      //     // console.log(util.inspect(res));
-      //     console.log(res.body);
-      //   });
-      // })
-  
     }); // describe - pods available
 
-    it('should access by service name', function() {
-      return k8sApi.proxyGETNamespacedPod("nodejs-0", "default")
-      .then(function(res) {
-        console.log("yep")
-      })
-    })
+    describe('should interact with the deployed services', function() {
+      // path to access the port through the kubectl proxy:
+      // http://localhost:8001/api/v1/namespaces/default/services/nodejs-service:web/proxy/
 
+      it('should access by pod...', function() {
+        return k8sApi.proxyGETNamespacedServiceWithPath("nodejs-service:web", "default", "/")
+        .then(function(res) {
+          // console.log(util.inspect(res,{depth:1}));
+          expect(res.body).to.not.be.null;
+        });
+      })
+
+    }) // interact with the deployed services
     
   }); //describe - cluster
 
