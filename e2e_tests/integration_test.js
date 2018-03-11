@@ -47,11 +47,23 @@ describe('kubernetes', function() {
       this.retries(120);
       // an a default timeout of 20,000ms that we can increase
       this.timeout(600000);
+      // for shelling out and describing thorugh kubectl
+      const exec = util.promisify(require('child_process').exec);
 
       it('check to see that all pods are reporting ready', function() {
         return new Promise(function(resolve, reject) {
           console.log(' - delay 5 seconds...')
           setTimeout(() => resolve(1), 5000);
+        }).then(function(result) {
+          return exec('kubectl describe deploy nodejs')
+          .then((res) => {
+              console.log(" - - "+res.stdout);
+              expect(res.stdout).to.not.be.null;
+              expect(res.stderr).to.be.empty;
+          }, (err) => {
+              expect(err).to.be.null;
+          })
+
         }).then(function(result) {
           return  k8sApi.listNamespacedPod('default')
           .then((res) => {
