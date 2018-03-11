@@ -44,7 +44,7 @@ describe('kubernetes', function() {
 
     describe('should repeat until the pods are ready', function() {
       // Mocha supports a retry mechanism limited by number of retries...
-      this.retries(100);
+      this.retries(120);
       // an a default timeout of 20,000ms that we can increase
       this.timeout(600000);
 
@@ -57,7 +57,7 @@ describe('kubernetes', function() {
           .then((res) => {
             res.body.items.forEach(function(pod) {
               var readyCondition = _.filter(pod.status.conditions, { 'type': 'Ready' })
-              //console.log("checking: "+pod.metadata.name+" ready: "+readyCondition[0].status);
+              console.log(" - - checking: "+pod.metadata.name+" ready: "+readyCondition[0].status);
               expect(readyCondition[0].status).to.equal('True')
             }) // pod forEach
           })
