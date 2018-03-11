@@ -44,20 +44,22 @@ describe('kubernetes', function() {
 
     describe('should repeat until the pods are ready', function() {
       // Mocha supports a retry mechanism limited by number of retries...
-      this.retries(120);
-      // an a default timeout of 20,000ms that we can increase
-      this.timeout(600000);
+      this.retries(30);
+      // an a default timeout of 20,000ms that we can increase...
+      this.timeout(160000);
       // for shelling out and describing thorugh kubectl
       const exec = util.promisify(require('child_process').exec);
 
       it('check to see that all pods are reporting ready', function() {
         return new Promise(function(resolve, reject) {
-          console.log(' - delay 5 seconds...')
-          setTimeout(() => resolve(1), 5000);
+          console.log(' - delay 10 seconds...')
+          setTimeout(() => resolve(1), 10000);
         }).then(function(result) {
           return exec('kubectl describe deploy nodejs')
           .then((res) => {
-              console.log(" - - "+res.stdout);
+              // uncomment this line to get more details about current state
+              // of the deployment in progress
+              //console.log(" - - "+res.stdout);
               expect(res.stdout).to.not.be.null;
               expect(res.stderr).to.be.empty;
           }, (err) => {
